@@ -45,6 +45,17 @@ environment:
 
    - PROFILE: MSVC2013
      PLATFORM: x86
+     CONFIGURATION: Debug
+     BOOST_VERSION: 1.58.0
+     LIBEVENT_VERSION: 2.0.22
+     PYTHON_VERSION: 3.5
+     QT_VERSION: 5.8
+     ZLIB_VERSION: 1.2.8
+     DISABLED_TESTS: StressTestNonBlocking
+     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+
+   - PROFILE: MSVC2013
+     PLATFORM: x86
      CONFIGURATION: Release
      BOOST_VERSION: 1.58.0
      LIBEVENT_VERSION: 2.0.22
@@ -54,15 +65,15 @@ environment:
      DISABLED_TESTS: StressTestNonBlocking
      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
 
-   - PROFILE: MINGW
-     PLATFORM: x64
-     CONFIGURATION: RelWithDebInfo
-     DISABLED_TESTS: StressTestNonBlocking
-
-   - PROFILE: CYGWIN
-     PLATFORM: x86
-     CONFIGURATION: RelWithDebInfo
-     DISABLED_TESTS: (ZlibTest|OpenSSLManualInitTest|TNonblockingServerTest|StressTestNonBlocking)
+#  - PROFILE: MINGW
+#    PLATFORM: x64
+#    CONFIGURATION: RelWithDebInfo
+#    DISABLED_TESTS: StressTestNonBlocking
+#
+#  - PROFILE: CYGWIN
+#    PLATFORM: x86
+#    CONFIGURATION: RelWithDebInfo
+#    DISABLED_TESTS: (ZlibTest|OpenSSLManualInitTest|TNonblockingServerTest|StressTestNonBlocking)
 
 #  - PROFILE: CYGWIN
 #    PLATFORM: x64
@@ -82,7 +93,10 @@ test_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - call build\appveyor\%PROFILE:~0,4%-appveyor-test.bat
 
-
+artifacts:
+  - path: 'dist'
+    name: build
+    
 # artifact capture disabled as it might increase service cost for little gain:
 #
 # artifacts:
